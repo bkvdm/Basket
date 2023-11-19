@@ -50,8 +50,9 @@ public class MarketServiceImpl implements MarketService {
 
             basketMap.forEach((k, v) -> {
                 if (v.getProductIdentifier().equals(productIdentifier)) {
-                    v.setQuantity(quantity);
-                    basketMap.put(k, v);
+                    Basket basketNewQuantity = new Basket(k, quantity);
+//                            v.setQuantity(quantity);
+                    basketMap.put(k, basketNewQuantity);
                 }
             });
 

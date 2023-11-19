@@ -28,9 +28,9 @@ public class OrderController {
     public Map<String, Basket> basketMap (@RequestParam(value = "product", required = false) String product, @RequestParam(value = "quantity", required = false) Integer quantity) {
         return marketService.addBasket(product, quantity);
     }
+
     @GetMapping("/addIdProduct")
     public Map<String, Basket> addIdProduct (@RequestParam(value = "productIdentifier", required = false) Integer productIdentifier, @RequestParam(value = "quantity", required = false) Integer quantity) {
-        return marketService.getBasket();
+        return marketService.addIdProduct(productIdentifier, quantity);
     }
-
 }
