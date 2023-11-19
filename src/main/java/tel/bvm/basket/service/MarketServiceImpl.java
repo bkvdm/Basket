@@ -7,8 +7,8 @@ import tel.bvm.basket.scheme.Basket;
 import javax.annotation.PostConstruct;
 import java.util.*;
 
-@SessionScope
 @Service
+@SessionScope
 public class MarketServiceImpl implements MarketService {
 
     public Map<String, Basket> basketMap;
