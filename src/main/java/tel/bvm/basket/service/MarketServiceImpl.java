@@ -4,16 +4,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 import tel.bvm.basket.scheme.Basket;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @SessionScope
 @Service
 public class MarketServiceImpl implements MarketService {
 
-    public final Map<String, Basket> basketMap;
+    public Map<String, Basket> basketMap;
 
-    public MarketServiceImpl(Map<String, Basket> basketMap) {
-        this.basketMap = basketMap;
+    public MarketServiceImpl() {
+        this.basketMap = new HashMap<>();
+    }
+
+    @PostConstruct()
+    public void init() {
+        addTypeProductBasket("Белые грибы", null);
+        addTypeProductBasket("Лисички", null);
+        addTypeProductBasket("Вешенки", null);
+        addTypeProductBasket("Шампиньоны", null);
+        addTypeProductBasket("Опята", null);
+        addTypeProductBasket("Подберёзовики", null);
+        addTypeProductBasket("Подосиновики", null);
+        addTypeProductBasket("Маслята", null);
+        addTypeProductBasket("Грузди", null);
+        addTypeProductBasket("Рыжики", null);
     }
 
     @Override
@@ -30,24 +45,18 @@ public class MarketServiceImpl implements MarketService {
 
     @Override
     public Map<String, Basket> addIdProduct(Integer productIdentifier, Integer quantity) {
-        Basket foundProduct = null;
-        String foundProductName = null;
 
-        boolean checkProductIdentifier = productIdentifier == null && productIdentifier > basketMap.size();
-        if (!checkProductIdentifier) {
-            for (int i = 0; i < basketMap.size(); i++) {
-                if (basketMap.get(i).getProductIdentifier().equals(productIdentifier)) {
-                    foundProduct = basketMap.get(i);
-                    foundProductName = foundProduct.getProduct();
-                    break;
+        if (productIdentifier != null) {
+
+            basketMap.forEach((k, v) -> {
+                if (v.getProductIdentifier().equals(productIdentifier)) {
+                    v.setQuantity(quantity);
+                    basketMap.put(k, v);
                 }
-            }
+            });
+
         } else {
             throw new RuntimeException();
-        }
-        if (foundProduct != null) {
-            foundProduct.setQuantity(quantity);
-            basketMap.put(foundProductName, foundProduct);
         }
         return basketMap;
     }
@@ -55,6 +64,7 @@ public class MarketServiceImpl implements MarketService {
     @Override
     public Map<String, Basket> addTypeProductBasket(String product, Integer quantity) {
         Basket basket = new Basket(product, quantity);
+        basket.setQuantity(null);
         basketMap.put(product, basket);
         return basketMap;
     }
