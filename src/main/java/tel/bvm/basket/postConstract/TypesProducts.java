@@ -16,15 +16,15 @@ public class TypesProducts {
 
     @PostConstruct()
     public void init() {
-        marketService.addBasket("Белые грибы", null);
-        marketService.addBasket("Лисички", null);
-        marketService.addBasket("Вешенки", null);
-        marketService.addBasket("Шампиньоны", null);
-        marketService.addBasket("Опята", null);
-        marketService.addBasket("Подберёзовики", null);
-        marketService.addBasket("Подосиновики", null);
-        marketService.addBasket("Маслята", null);
-        marketService.addBasket("Грузди", null);
-        marketService.addBasket("Рыжики", null);
+        marketService.addTypeProductBasket("Белые грибы", null);
+        marketService.addTypeProductBasket("Лисички", null);
+        marketService.addTypeProductBasket("Вешенки", null);
+        marketService.addTypeProductBasket("Шампиньоны", null);
+        marketService.addTypeProductBasket("Опята", null);
+        marketService.addTypeProductBasket("Подберёзовики", null);
+        marketService.addTypeProductBasket("Подосиновики", null);
+        marketService.addTypeProductBasket("Маслята", null);
+        marketService.addTypeProductBasket("Грузди", null);
+        marketService.addTypeProductBasket("Рыжики", null);
     }
 }

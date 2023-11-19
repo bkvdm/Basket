@@ -2,7 +2,6 @@ package tel.bvm.basket.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
-import tel.bvm.basket.exception.ProductNotFoundException;
 import tel.bvm.basket.scheme.Basket;
 
 import java.util.*;
@@ -11,40 +10,53 @@ import java.util.*;
 @Service
 public class MarketServiceImpl implements MarketService {
 
-    public final Map<Integer, Basket> basketMap;
+    public final Map<String, Basket> basketMap;
 
-    public MarketServiceImpl(Map<Integer, Basket> basketMap) {
+    public MarketServiceImpl(Map<String, Basket> basketMap) {
         this.basketMap = basketMap;
     }
 
     @Override
-    public Map<Integer, Basket> getBasket() {
+    public Map<String, Basket> getBasket() {
         return Collections.unmodifiableMap(basketMap);
     }
 
     @Override
-    public Map<Integer, Basket> addBasket(String product, Integer quantity) {
+    public Map<String, Basket> addBasket(String product, Integer quantity) {
         Basket basket = new Basket(product, quantity);
-        basketMap.put(basket.getProductIdentifier(), basket);
+        basketMap.put(product, basket);
         return basketMap;
     }
 
     @Override
-    public Map<Integer, Basket> addIdProduct(Integer productIdentifier, Integer quantity) throws ProductNotFoundException {
+    public Map<String, Basket> addIdProduct(Integer productIdentifier, Integer quantity) {
         Basket foundProduct = null;
+        String foundProductName = null;
 
         boolean checkProductIdentifier = productIdentifier == null && productIdentifier > basketMap.size();
         if (!checkProductIdentifier) {
             for (int i = 0; i < basketMap.size(); i++) {
                 if (basketMap.get(i).getProductIdentifier().equals(productIdentifier)) {
                     foundProduct = basketMap.get(i);
+                    foundProductName = foundProduct.getProduct();
                     break;
                 }
             }
-            foundProduct.setQuantity(quantity);
         } else {
-            throw new ProductNotFoundException();
+            throw new RuntimeException();
+        }
+        if (foundProduct != null) {
+            foundProduct.setQuantity(quantity);
+            basketMap.put(foundProductName, foundProduct);
         }
         return basketMap;
     }
+
+    @Override
+    public Map<String, Basket> addTypeProductBasket(String product, Integer quantity) {
+        Basket basket = new Basket(product, quantity);
+        basketMap.put(product, basket);
+        return basketMap;
+    }
 }
+

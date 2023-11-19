@@ -19,16 +19,17 @@ public class OrderController {
     }
 
     @RequestMapping("/get")
-    public Map<Integer, Basket> getBasket() {
+    public Map<String, Basket> getBasket() {
         return marketService.getBasket();
     }
 
     @RequestMapping("/add")
-    public Map<Integer, Basket> basketMap (@RequestParam(value = "product", required = false) String product, @RequestParam(value = "quantity", required = false) Integer quantity) {
+    public Map<String, Basket> basketMap (@RequestParam(value = "product", required = false) String product, @RequestParam(value = "quantity", required = false) Integer quantity) {
         return marketService.addBasket(product, quantity);
     }
     @RequestMapping("/addIdProduct")
-    public Map<Integer, Basket> addIdProduct (@RequestParam(value = "productIdentifier", required = false) Integer productIdentifier, @RequestParam(value = "quantity", required = false) Integer quantity) {
+    public Map<String, Basket> addIdProduct (@RequestParam(value = "productIdentifier", required = false) Integer productIdentifier, @RequestParam(value = "quantity", required = false) Integer quantity) {
         return marketService.getBasket();
     }
+
 }
